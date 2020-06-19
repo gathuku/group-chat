@@ -3,7 +3,9 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  resources :channels
+  resources :channels do
+    resources :channel_user
+  end
   namespace :admin do
     resources :users
     resources :notifications

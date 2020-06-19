@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class ChannelsController < ApplicationController
-  before_action :set_channel, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:index]
+  before_action :set_channel, only: %i[show edit update destroy]
 
   # GET /channels
   # GET /channels.json
@@ -9,8 +12,7 @@ class ChannelsController < ApplicationController
 
   # GET /channels/1
   # GET /channels/1.json
-  def show
-  end
+  def show; end
 
   # GET /channels/new
   def new
@@ -18,8 +20,7 @@ class ChannelsController < ApplicationController
   end
 
   # GET /channels/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /channels
   # POST /channels.json
@@ -62,13 +63,14 @@ class ChannelsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_channel
-      @channel = Channel.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def channel_params
-      params.require(:channel).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_channel
+    @channel = Channel.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def channel_params
+    params.require(:channel).permit(:name)
+  end
 end
