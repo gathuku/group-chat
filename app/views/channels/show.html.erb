@@ -5,7 +5,7 @@
       <%= link_to icon('fas','plus'), new_channel_path %>
     </div>
     <% Channel.all.each do |channel| %>
-    <div class="">
+    <div class="d-flex justify-content-between">
       <%= link_to channel.name, channel %>
       <% if current_user.channels.include?(channel) %>
        <%= link_to icon('fas','times'), channel_channel_user_path(@channel), method: :delete %>
