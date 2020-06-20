@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" data-controller="channel" data-channel-id="<%= @channel.id %>">
   <div class="col-md-2">
     <div class="d-flex justify-content-between">
       <h6 class="text-primary">Channels</h6>
@@ -28,11 +28,13 @@
   </div>
 
   <div class="col-md-10">
-    <%= render @channel.messages %>
+    <div data-target="channel.messages">
+      <%= render @channel.messages %>
+    </div>
 
     <% if current_user.channels.include?(@channel) %>
-     <%= form_with model: [@channel,Message.new] do |form| %>
-      <%= form.text_field :body, class:'form-control' %>
+     <%= form_with model: [@channel,Message.new], data:{action: "ajax:success->channel#clearMessage"}  do |form| %>
+      <%= form.text_field :body, class:'form-control', data: {target:"channel.newMessage"} %>
      <% end %>
     <% else %>
      <%= link_to "Join #{@channel.name}", channel_channel_user_index_path(@channel), method: :post %>
